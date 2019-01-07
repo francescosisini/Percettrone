@@ -3,3 +3,5 @@ Il percettrone è l'elemento base delle reti neurali supervisionate. E' stato in
 ![Percettrone](Blocchi_perc.svg)
 Più percettroni possono essere combinati insieme formando una rete. La rete viene detta rete neurale per il fatto che il percettrone è la rappresentazione astratta di un aspetto della fisiologia dei neuroni.
 ![Percettrone](MLP.svg)
+Se la rete neurale è composta da un solo strato di percettroni, allora il sistema sarà capace di classificare solo input lineramente separabili.
+![Percettrone](classi.svg)
