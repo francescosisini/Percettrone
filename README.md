@@ -11,4 +11,4 @@ Se la rete neurale è composta da un solo strato di percettroni, allora il siste
 ![Percettrone](Classi.svg)
 
 Una rete con uno strato *deep* può classificare anche dei segnali non lineramente separabili.
-## Separazione linerare
+
