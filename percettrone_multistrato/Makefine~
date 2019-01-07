@@ -1,1 +1,0 @@
-gcc -o p_m percettrone_ms.c -lm
