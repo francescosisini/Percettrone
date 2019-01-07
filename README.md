@@ -1,2 +1,2 @@
-# percettrone-percpetron-
-Rete Neurale di Percettroni
+# percettrone
+Il percettrone è l'elemento base delle reti neurali supervisionate. E' stato introdotto da Rosenblatt nel 1958
