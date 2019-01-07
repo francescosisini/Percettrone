@@ -1,3 +1,0 @@
-default: p_ms
-pm_ms:
-        gcc -o p_m percettrone_ms.c -lm
