@@ -19,10 +19,12 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-
+#include <string.h>
 
 /*Numero di neuroni di input*/
 #define VROWS 2
+
+#define FILE_NAME_SIZE 20 
 
 /*Ampiezza degli assi x e y (da -X_Y_MAX/2 a + X_Y_MAX/2)
 Si modifichi la dimensione della finestra del terminale
@@ -46,10 +48,16 @@ int read_test(FILE *fp,double test[]);
 
 
 
-int main()
+int main(int argc, char * argv[])
 {
+  /*Nomi dei file di addestramento e test*/
+  char file_name[FILE_NAME_SIZE];
+  memset(file_name,0,FILE_NAME_SIZE);
+  strcpy(file_name,argv[0]);
+  strcat(file_name,".dat");
+  
   /*Carica i dati di addestramento*/
-  FILE * f=fopen("data_perc.txt","rt");
+  FILE * f=fopen(file_name,"rt");
   if(f==0) exit(1);
 
   
@@ -87,8 +95,13 @@ int main()
   //printf("Percettrone addestrato\n**********************\n");
   
   fclose(f);
+
+  /*Nome del file con i dati di test*/
+  memset(file_name,0,FILE_NAME_SIZE);
+  strcpy(file_name,argv[0]);
+  strcat(file_name,".tst");
   
-  f=fopen("test_perc.txt","rt");
+  f=fopen(file_name,"rt");
   if(f==0) exit(1);
   /*Testa il percettrone*/
   while(read_test(f,x)!=EOF)
