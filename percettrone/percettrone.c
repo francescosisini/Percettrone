@@ -39,7 +39,7 @@ double calculate_activation(double weight[],double input[]);
 int classify_activation(double activation_value); 
 
 /*Stampa a video il grafico dei punti della retta separante le classi*/
-void print_js(double x,double y, int cls, double w[],char label[]);
+void print_js(double x,double y, int cls, double w[],char label[],int i);
 
 
 void vector_init(double res[VROWS],double val);
@@ -77,22 +77,21 @@ int main(int argc, char * argv[])
   r=0.05;
   
   /*Addestra il percettrone*/
-  //printf("Addestramento Percettrone\n**********************\n");
+  int count=0;
   while(read_input_output(f,x,&out)!=EOF)
     {
       a=calculate_activation(w,x);
       cls=classify_activation(a);
-      printf("x=(%lf,%lf), out=%lf, cls=%d\n",x[1],x[2],out,cls);
+      //printf("x=(%lf,%lf), out=%lf, cls=%d\n",x[1],x[2],out,cls);
       /*Calcolo il nuovo vettore pesi*/
       for(int i=0; i<VROWS+1; i++)
         {
           w[i]=w[i]+r*(out-cls)*x[i];
-          printf("w_%d=%lf\t",i,w[i]);
+          //printf("w_%d=%lf\t",i,w[i]);
         }
-      print_js( x[1],x[2], out,  w,"Apprendimento");
-      printf("\n\n");
+      print_js( x[1],x[2], out,  w,"Apprendimento",count);
+      count ++;
     }
-  //printf("Percettrone addestrato\n**********************\n");
   
   fclose(f);
 
@@ -103,13 +102,14 @@ int main(int argc, char * argv[])
   
   f=fopen(file_name,"rt");
   if(f==0) exit(1);
+  
   /*Testa il percettrone*/
   while(read_test(f,x)!=EOF)
     {
       a=calculate_activation(w,x);
       cls=classify_activation(a);
-      print_js( x[1],x[2], cls,  w,"Test");
-      //printf("x=(%lf,%lf),  cls=%d\n",x[1],x[2],cls);
+      print_js( x[1],x[2], cls,  w,"Test",count);
+      count++;
     }
   fclose(f);
 }
@@ -157,15 +157,17 @@ int read_test(FILE *fp,double inp[]){
 }
 
 
-void print_js(double x,double y, int cls, double w[],char label[])
+void print_js(double x,double y, int cls, double w[],char label[],int iter)
 {
   double m,q;
   if(w[2]==0) return;
   m=-w[1]/w[2];
   q=-w[0]/w[2];
-
-  printf("disegna_punto(%lf,%lf,%d)",x,y,cls);
-
+  printf("if(i==%d){",iter);
+  printf("scrivi_messaggio('%s');\n",label);
+  printf("disegna_punto(%lf,%lf,%d);\n",x,y,cls);
+  printf("disegna_retta(%lf,%lf);\n}\n",m,q);
+  
 }
 
 
