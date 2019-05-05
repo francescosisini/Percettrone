@@ -39,7 +39,7 @@ double calculate_activation(double weight[],double input[]);
 int classify_activation(double activation_value); 
 
 /*Stampa a video il grafico dei punti della retta separante le classi*/
-void print_graph(double x,double y, int cls, double w[],char label[]);
+void print_js(double x,double y, int cls, double w[],char label[]);
 
 
 void vector_init(double res[VROWS],double val);
@@ -89,7 +89,7 @@ int main(int argc, char * argv[])
           w[i]=w[i]+r*(out-cls)*x[i];
           printf("w_%d=%lf\t",i,w[i]);
         }
-      print_graph( x[1],x[2], out,  w,"Apprendimento");
+      print_js( x[1],x[2], out,  w,"Apprendimento");
       printf("\n\n");
     }
   //printf("Percettrone addestrato\n**********************\n");
@@ -108,7 +108,7 @@ int main(int argc, char * argv[])
     {
       a=calculate_activation(w,x);
       cls=classify_activation(a);
-      print_graph( x[1],x[2], cls,  w,"Test");
+      print_js( x[1],x[2], cls,  w,"Test");
       //printf("x=(%lf,%lf),  cls=%d\n",x[1],x[2],cls);
     }
   fclose(f);
@@ -155,6 +155,19 @@ int read_test(FILE *fp,double inp[]){
   r=fscanf(fp,"%lf,%lf",inp+1,inp+2);
   return r;
 }
+
+
+void print_js(double x,double y, int cls, double w[],char label[])
+{
+  double m,q;
+  if(w[2]==0) return;
+  m=-w[1]/w[2];
+  q=-w[0]/w[2];
+
+  printf("disegna_punto(%lf,%lf,%d)",x,y,cls);
+
+}
+
 
 void print_graph(double x,double y, int cls, double w[],char label[])
 {
