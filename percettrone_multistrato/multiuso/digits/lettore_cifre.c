@@ -1,28 +1,28 @@
-/*
-    Percettrone_ms: rete di percettroni a due strati
-    Copyright (C) 2018  Francesco Sisini (francescomichelesisini@gmail.com)
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+/*_________________________________________________________________________
+  |  Percettrone_ms: rete di percettroni a due strati
+  |  Copyright (C) 2018  Francesco Sisini (francescomichelesisini@gmail.com)
+  |
+  |  This program is free software: you can redistribute it and/or modify
+  |  it under the terms of the GNU General Public License as published by
+  |  the Free Software Foundation, either version 3 of the License, or
+  |  (at your option) any later version.
+  |
+  |  This program is distributed in the hope that it will be useful,
+  |  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  |  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  |  GNU General Public License for more details.
+  |
+  |  You should have received a copy of the GNU General Public License
+  |  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <math.h>
+#include "ss_snn_lib.h"
 
-/*
- * MLP Multy Layer Perceptron
- * Francesco Sisini (c) 2019
+/*___________________________
+ *| lettore_cifre
+ *| Francesco Sisini (c) 2019
  */
 
 /* Strato (layer) 1*/
@@ -41,37 +41,6 @@
 
 /* Velocità apprendimento*/
 #define RATE 0.2
-
-/*** Livello 1 ***/
-/* Calcola l'output di uno strato  percettroni */
-void layer_feed_forward(double v_s[],double v_y[],double v_w[],double v_x[],int n_perc, int n_dend);
-
-/* Mappa l'output v_y in v_x aggiungendo prima l'elemento v_x[0]=1*/
-void layer_map_out_in(double v_x[],double v_y[], int n_dend);
-
-/*** Livello 2 ***/
-/* Calcola la risposta del  percettrone */
-double perc_calc_output(double v_w[],double v_x[],int n_dend);
-
-/* Corregge i pesi del percettrone */
-void perc_correzione(double v_w[],double v_x[],double z,double d,double rate,int n_dend);
-
-/*** Livello 3 ***/
-
-/* Calcola il valore della risposta del percettrone*/
-double activ_function(double summed_input);
-
-/* Calcola il valore della derivata della risposta del percettrone*/
-double Dactiv_function(double summed_input);
-
-
-/* Protoipi esterni */
-
-/* Legge un immagine 28x28 in o e la sua label in out_label */
-int get_image(int * o,int * out_label,FILE * in_stream);
-
-/* Stampa a video una matrice r x c in R,C */
-void print_object(double x[],int r, int c,int R,int C);
 
 int main()
 {
@@ -214,6 +183,12 @@ int main()
       fclose(stream);
     }
 
+  /*_____________________________________
+    | Salva la rete
+   */
+  FILE* sw = fopen("layer1.w", "w");
+  layer_writedown(sw,v_t, L1_ND, L1_NP);
+    
   /*********************
    *
    * TEST                                 
@@ -279,82 +254,4 @@ int main()
       
       fclose(stream);
 }
-
-
-
-/*  v_s: vettore delle somme dei canali dendritici per gli n_perc percettroni
- *  v_y: vettore degli output per gli n_perc percetroni
- *  v_w: vettore dei pesi dendritici per gli n_perc percetroni
- *  v_x: vettore degli input al percettrone (uguale per tutti  gli n_perc percetroni)
- *  n_perc: numero di percettroni nello strato
- *  n_dend: numero di dendriti per percettrone */
-void layer_feed_forward(double v_s[],double v_y[],double v_w[],double v_x[],int n_perc, int n_dend)
-{
-  for(int i=0;i<n_perc;i++)
-    {
-      /*calcola l'output per ogni percettrone*/
-      v_s[i]=perc_calc_output(v_w+i*(n_dend+1),v_x,n_dend);
-      v_y[i]=activ_function(v_s[i]);
-    }
-}
-
-/*
- * FUNZIONE
- * perc_correzione()
- * 
- * DESCRIZIONE
- * modifica il valore dei pesi sinaptici dei dendriti di un percettrone
- *
- * PARAMETRI
- * v_w vettore di dimensione n_dend+1. Il primo elemento è 1, il resto sono i pesi sinaptici
- * v_x vettore dell'input del percettrone. Il primo elemento è 1
- * z somma pesata dell'input: v_w < . v_x
- * d Valore Atteso - Valore Calcolato
- * rate learning rate
- * n_dend numero dei dendriti del percettrone
- */
-void perc_correzione(double v_w[],double v_x[],double z,double d,double rate,int n_dend)
-{
-  /* cicolo sui dendriti */
-   for(int i=0;i<n_dend+1;i++)
-    {
-      v_w[i]=v_w[i]+rate*v_x[i]*(d)*Dactiv_function(z);
-    }
-}
-
-void layer_map_out_in(double v_x[],double v_y[], int n_dend)
-{
-  v_x[0]=1;
-  for(int i=1;i<n_dend+1;i++)v_x[i]=v_y[i-1];
-}
-
-/*  v_w: vettore di dimensione  n_dend+1 di pesi dendritici
- *  v_x: vettore delgi n_dend+1 (c'è il bias) input al percettrone
- *  n_dend numero di dendriti  */
-double perc_calc_output(double v_w[],double v_x[],int n_dend)
-{
-  double a=0;
-  /*somma pesata degli stimoli di ingresso*/
-  for(int i=0;i<n_dend+1;i++) a=a+v_w[i]*v_x[i];
- 
-  /*Attivazione del percettrone*/
-  return a;
-}
-double activ_function(double summed_input)
-{
-  // double r=tanh(summed_input);
-  double r=1/(1+exp(-summed_input));
-  return r;
-}
-double Dactiv_function(double summed_input)
-{
-  //double r=tanh(summed_input);
-  double r=activ_function(summed_input);
-  //return 1-r*r;
-  return r*(1-r);
-}
-
-
-
-
 
