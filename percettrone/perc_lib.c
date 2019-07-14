@@ -12,6 +12,12 @@ void print_js(double x,double y, int cls, double w[],char label[],int iter)
   printf("disegna_retta(%lf,%lf);\n}\n",m,q);
   
 }
+
+int fine(int i)
+{
+  printf("if(i==%d)fine();\n",i);
+}
+
 int read_input_output(FILE *fp,double inp[],double* out){
   int r;
   r=fscanf(fp,"%lf,%lf,%lf",inp+1,inp+2,out);

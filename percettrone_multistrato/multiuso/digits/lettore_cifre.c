@@ -70,10 +70,6 @@ int main()
   /*Output desiderato*/
   double v_d[L2_NP];/* NP output desiderato uno per percettrone*/
   
-  /*Inizializza la rete dal file di input*/
-
-  char comment[300];
-  
   
   /*Carica dal file le configurazioni iniziali della rete*/
 

@@ -110,7 +110,7 @@ int main(int argc,char* argv[])
                   imax=i;
                 }
             }
-          
+          print_object(v_x0+1,28, 28,1,1);
           printf("label: %d letto %d",label,imax);
           fflush(stdout);
   

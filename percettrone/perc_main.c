@@ -37,6 +37,7 @@ void print_js(double x,double y, int cls, double w[],char label[],int i);
 void vector_init(double res[VROWS],double val);
 int read_input_output(FILE *fp,double inp[],double * out);
 int read_test(FILE *fp,double test[]);
+int fine(int);
 
 int main(int argc, char * argv[])
 {
@@ -99,6 +100,7 @@ int main(int argc, char * argv[])
       print_js( x[1],x[2], cls,  w,"Test",count);
       count++;
     }
+  fine(count);
   fclose(f);
 }
 

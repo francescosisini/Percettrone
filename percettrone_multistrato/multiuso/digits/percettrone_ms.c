@@ -119,7 +119,7 @@ int main()
     v_u[i]=(double)rand()/(1000.*(double)RAND_MAX);
 
   // print_object(v_u+1,L2_ND+1, L2_NP,1,1);
-  getchar();
+ 
 
   
   for(int ii=0;ii<N_T;ii++)
@@ -127,7 +127,7 @@ int main()
       FILE* stream = fopen("train.csv", "r");
       if(stream==0) exit(1);
       /*Carica i dati di training ed esegue il training*/
-      for(int jj=0;jj<320;jj++)
+      for(int jj=0;jj<1000;jj++)
         {
           get_image(img,&label,stream);
                   
@@ -208,7 +208,7 @@ int main()
               printf("\n");
               printf("Riconosciuto il numero <%d>\n",imax);
               fflush(stdout);
-              getchar();      
+              
             }
         }
       fclose(stream);

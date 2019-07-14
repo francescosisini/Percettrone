@@ -34,7 +34,7 @@
 #define L2_NP 10
 
 /* Numero campioni di addestrameno */
-#define N_C 10
+#define N_C 500
 
 /* Numeri di ripetizioni dell'addestramento */
 #define N_T 1250
@@ -89,11 +89,13 @@ int main()
   
   for(int ii=0;ii<N_T;ii++)
     {
+      if(ii%10==0)printf("Epoca %d di %d\n",ii,N_T);
       FILE* stream = fopen("train.csv", "r");
       if(stream==0) exit(1);
       /*Carica i dati di training ed esegue il training*/
-      for(int jj=0;jj<320;jj++)
+      for(int jj=0;jj<N_C;jj++)
         {
+          
           get_image(img,&label,stream);
                   
           /* conversione immagine da int a double */

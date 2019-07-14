@@ -42,8 +42,8 @@ void print_object(double x[],int r, int c,int R,int C);
  */
 void layer_writedown(FILE * stream,double *v_w, int n_dend, int n_perc);
 
-/*_____________________________________________________
- | stream: il file da cui
+/*______________________________________________________
+ | stream: il file da cui legge i pesi delle connessioni
  | v_w: l'array sequenziale con tutti i pesi del layer
  | n_dend: numero di dendriti per percettrone
  | n_perc: numero di percettroni nel layer
