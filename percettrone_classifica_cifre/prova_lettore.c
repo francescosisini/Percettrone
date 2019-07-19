@@ -27,10 +27,10 @@
 
 /* Strato (layer) 1*/
 #define L1_ND 784
-#define L1_NP 15
+#define L1_NP 100
 
 /* Strato (layer) 2*/
-#define L2_ND 15
+#define L2_ND 100
 #define L2_NP 10
 
 int main(int argc,char* argv[])
@@ -130,7 +130,7 @@ int main(int argc,char* argv[])
               printf("\n| %d (%.1lf\%)\n",i,v_y2[i]*100);
             }
           printf("\n________________________________________");
-          printf("\n| Campioni 40000\n| Epoche 5\n| Addestramento 16 (min)");
+          printf("\n| Campioni 60000\n| Epoche 5\n| Addestramento 5 (min)");
           fflush(stdout);  
 }
 

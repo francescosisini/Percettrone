@@ -169,7 +169,7 @@ void print_object(double x[],int r, int c,int R,int C)
 	int col=max_c-(min_c+(double)(gl-min)*conv)+min_c;
 	if(col<0)printf("%f",gl);
 	//if(gl>0.9) col=0;
-	printf("\x1b[%d;%dH\x1b[38;5;%dmX\x1b[0m  ",i+R,2*j+C,col);
+	printf("\x1b[%d;%dH\x1b[48;5;%dm  \x1b[0m",i+R,2*j+C,col);
 
       }
   fflush(stdout);

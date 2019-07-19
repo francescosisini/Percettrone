@@ -27,10 +27,10 @@
 
 /* Strato (layer) 1*/
 #define L1_ND 784
-#define L1_NP 15
+#define L1_NP 100
 
 /* Strato (layer) 2*/
-#define L2_ND 15
+#define L2_ND 100
 #define L2_NP 10
 
 /* Numero campioni di addestrameno */
@@ -49,7 +49,7 @@ int main(int argc,char *argv[])
   
   if(argc<3)
     {
-      printf("uso: ss_addestra <file.csv>  <numero_epoche> <numero_epoche>");
+      printf("uso: ss_addestra <file.csv>  <numero_epoche> <numero_campioni> <lerning_rate> <max_sinapsi> <rnd_seed> <numero_neuroni_hidden>");
       exit(1);
     }
   if(sscanf(argv[2],"%i",&epoche)!=1)
@@ -75,6 +75,32 @@ int main(int argc,char *argv[])
           exit(1);
         }
     }
+
+   /*Estremo superiore del valore iniziale delle sinapsi (0 to ...)*/
+  double sinapsi=0.001;
+
+  if(argc>=6)
+    {
+      if(sscanf(argv[5],"%lf",&sinapsi)!=1)
+        {
+          printf("%s non e' un float\n",argv[5]);
+          exit(1);
+        }
+    }
+
+   /*Estremo superiore del valore iniziale delle sinapsi (0 to ...)*/
+  int seed=1;
+
+  if(argc>=7)
+    {
+      if(sscanf(argv[6],"%i",&seed)!=1)
+        {
+          printf("%s non e' un int\n",argv[6]);
+          exit(1);
+        }
+    }
+
+  
   /* Immagine da file CSV */
   int img[L1_ND];
   /* Label da file CSV (desiderd output) */
@@ -99,10 +125,10 @@ int main(int argc,char *argv[])
   
   /*Carica dal file le configurazioni iniziali della rete*/
 
-  srand(22);
+  srand(seed);
   /*2) bias+pesi strato 1*/
   for(int i=0;i<(L1_ND+1)*L1_NP;i++)
-    v_t[i]=(double)rand()/(1000.*(double)RAND_MAX);
+    v_t[i]=sinapsi*(double)rand()/(double)RAND_MAX;
   //print_object(v_t+1,L1_ND+1, L1_NP,1,1);
 
 
@@ -110,7 +136,7 @@ int main(int argc,char *argv[])
   
   /*3) bias+pesi strato 2*/
   for(int i=0;i<(L2_ND+1)*L2_NP;i++)
-    v_u[i]=(double)rand()/(1000.*(double)RAND_MAX);
+    v_u[i]=sinapsi*(double)rand()/(double)RAND_MAX;
   
   for(int ii=0;ii<epoche;ii++)
     {

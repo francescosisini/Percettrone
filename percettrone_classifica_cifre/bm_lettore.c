@@ -27,13 +27,13 @@
 
 /* Strato (layer) 1*/
 #define L1_ND 784
-#define L1_NP 15
+#define L1_NP 100
 
 /* Strato (layer) 2*/
-#define L2_ND 15
+#define L2_ND 100
 #define L2_NP 10
 
-#define N_TEST 1000
+#define N_TEST 10000
 
 int main(int argc,char* argv[])
 {
@@ -125,7 +125,7 @@ int main(int argc,char* argv[])
             }
         }
       if(label==imax) score++;
-      print_object(v_x0+1,28, 28,1,1);
+      print_object(v_x0+1,28, 28,10,30);
       
       fflush(stdout);
     }
