@@ -21,7 +21,7 @@
 #include "ss_snn_lib.h"
 
 /*___________________________
- *| prova_lettore
+ *| benchmark_lettore.c
  *| Francesco Sisini (c) 2019
  */
 
@@ -38,7 +38,7 @@
 int main(int argc,char* argv[])
 {
 
-  if(argc<4)
+  if(argc<5)
     {
       printf("uso: ss_lettore <digit.csv> <layer1.w> <layer2.w>");
       exit(1);

@@ -15,6 +15,7 @@
   |  You should have received a copy of the GNU General Public License
   |  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+// ./irn_addestra mnist_train.csv 7 60000 0.2 0.01 9 100 
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -33,10 +34,6 @@
 #define L2_ND 100
 #define L2_NP 10
 
-/* Numero campioni di addestrameno */
-#define N_C 40000
-
-
 /* Velocità apprendimento*/
 #define RATE 0.2
 
@@ -47,9 +44,9 @@ int main(int argc,char *argv[])
   int epoche=1;
   int campioni=1;
   
-  if(argc<3)
+  if(argc<4)
     {
-      printf("uso: ss_addestra <file.csv>  <numero_epoche> <numero_campioni> <lerning_rate> <max_sinapsi> <rnd_seed> <numero_neuroni_hidden>");
+      printf("uso: ss_addestra <file.csv>  <numero_epoche> <numero_campioni> <lerning_rate> <max_sinapsi> <rnd_seed>");
       exit(1);
     }
   if(sscanf(argv[2],"%i",&epoche)!=1)
@@ -154,9 +151,12 @@ int main(int argc,char *argv[])
           v_x0[0]=1;
           for(int i=0;i<L1_ND;i++)
             {
-              if(img[i]>90)v_x0[i+1]=1;//((double)img[i]/255.);
+              if(img[i]>90)v_x0[i+1]=1;
               else v_x0[i+1]=0;
-              //v_x0[i+1]=(double)img[i];
+
+              //((double)img[i]/255.);
+              
+              v_x0[i+1]=((double)img[i])/255;
               
             }                 
           /*4 output desiderato*/

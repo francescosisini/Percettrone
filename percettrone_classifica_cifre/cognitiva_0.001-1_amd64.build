@@ -1,0 +1,9 @@
+ dpkg-buildpackage -rfakeroot -us -uc -ui
+dpkg-buildpackage: info: source package cognitiva
+dpkg-buildpackage: info: source version 0.001-1
+dpkg-buildpackage: info: source distribution UNRELEASED
+dpkg-buildpackage: info: source changed by Scuola_Sisini <francescomichelesisini@gmail.com>
+ dpkg-source --before-build cognitiva
+dpkg-buildpackage: info: host architecture amd64
+dpkg-source: error: cognitiva/debian/control doesn't list any binary package
+dpkg-buildpackage: error: dpkg-source --before-build cognitiva subprocess returned exit status 25

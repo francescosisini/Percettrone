@@ -1,5 +1,5 @@
 /*_________________________________________________________________________
-  |  Percettrone_ms: rete di percettroni a due strati
+  |  cognitiva/pms_riconosci: rete di percettroni a due strati
   |  Copyright (C) 2018  Francesco Sisini (francescomichelesisini@gmail.com)
   |
   |  This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,8 @@
 #include "ss_snn_lib.h"
 
 /*___________________________
- *| prova_lettore
+ *| suite:  cognitiva
+ *| programma: pms_riconosci
  *| Francesco Sisini (c) 2019
  */
 
@@ -38,7 +39,7 @@ int main(int argc,char* argv[])
 
   if(argc<4)
     {
-      printf("uso: ss_lettore <digit.csv> <layer1.w> <layer2.w>");
+      printf("\bUso: pms_riconosci <numero.csv> <connessioni_intercalari.w> <connessioni_efferenti.w>");
       exit(1);
     }
   
